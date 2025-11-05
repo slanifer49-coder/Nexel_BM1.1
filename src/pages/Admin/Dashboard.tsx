@@ -18,7 +18,7 @@ export default function AdminDashboard() {
       const token = localStorage.getItem('token');
       console.log('🔑 Fetching admin stats with token:', token ? 'Present' : 'Missing');
       
-      const res = await fetch('http://localhost:5001/api/v1/admin/stats', {
+      const res = await fetch('http://localhost:5000/api/v1/admin/stats', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -27,7 +27,7 @@ export default function Discussions() {
   }, [messages]);
 
   useEffect(() => {
-    const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+    const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
     
     // Close any existing connection
     if (eventRef.current) {
@@ -88,7 +88,7 @@ export default function Discussions() {
     if (!messageText || isSending) return;
 
     setIsSending(true);
-    const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+    const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
     
     try {
       const response = await fetch(`${base}/discussions/send`, {
