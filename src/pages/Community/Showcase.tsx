@@ -186,7 +186,14 @@ export default function Showcase() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-bold font-orbitron leading-tight">{g.title}</h3>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-bold font-orbitron leading-tight">{g.title}</h3>
+                    {g.source === 'itch.io' && (
+                      <span className="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs font-medium">
+                        itch.io
+                      </span>
+                    )}
+                  </div>
                   <p className="text-muted-foreground text-sm">by {g.author}</p>
                 </div>
                 <button
