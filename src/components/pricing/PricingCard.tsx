@@ -72,7 +72,7 @@ interface PricingCardProps {
 export const PricingCard: React.FC<PricingCardProps> = ({ plan, isPopular = false }) => {
   const { user } = useAuth();
   const { subscription, updateSubscription, isLoading } = useSubscription();
-  const router = useRouter();
+  const navigate = useNavigate();
   
   const isCurrentPlan = subscription.plan === plan;
   const isSubscribed = subscription.plan !== 'Free';
