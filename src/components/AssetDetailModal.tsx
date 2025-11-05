@@ -119,48 +119,78 @@ export function AssetDetailModal({ asset, isOpen, onClose }: AssetDetailModalPro
 
           {/* Two-column layout: Image left, details right (stacks on mobile) */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Left: Main asset image with hover preview overlay */}
-            <div 
-              className="relative group"
-              onMouseMove={handleHoverMove}
-              onMouseLeave={() => setTiltDeg(0)}
-            >
-              <img
-                src={asset.thumbnailUrl}
-                alt={asset.name}
-                className="w-full h-72 lg:h-96 rounded-lg object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-                style={isModel3D ? { transform: `perspective(900px) rotateY(${tiltDeg}deg)` } : undefined}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-lg pointer-events-none" />
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <Button 
-                  variant="secondary" 
-                  className="bg-primary/85 text-primary-foreground border border-primary/40 shadow-glow-primary hover:bg-primary backdrop-blur-sm px-5 py-2"
-                  onClick={handlePreviewClick}
+            {/* Left: Asset Preview */}
+            <div className="relative">
+              {showAssetViewer ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold font-orbitron">Asset Preview</h3>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCloseAssetViewer}
+                      className="flex items-center gap-2"
+                    >
+                      Back to Thumbnail
+                    </Button>
+                  </div>
+                  <div className="h-96 rounded-lg overflow-hidden border border-primary/20">
+                    <AssetViewer
+                      asset={{
+                        name: asset.name,
+                        fileUrl: asset.fileUrl,
+                        thumbnailUrl: asset.thumbnailUrl,
+                        category: asset.category,
+                        fileType: asset.fileType
+                      }}
+                      className="w-full h-full"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="relative group"
+                  onMouseMove={handleHoverMove}
+                  onMouseLeave={() => setTiltDeg(0)}
                 >
-                  <Play className="h-4 w-4 mr-2" />
-                  Preview
-                </Button>
-                {isAudio && <audio ref={audioRef} src={asset.fileUrl} preload="metadata" />}
-              </div>
-              {/* Stats & share on image */}
-              <div className="absolute bottom-3 left-3 right-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1 text-accent">
-                      <Star className="h-5 w-5 fill-current" />
-                      <span className="font-medium">{asset.rating}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-white/80">
-                      <Download className="h-5 w-5" />
-                      <span>{asset.downloadCount.toLocaleString()} downloads</span>
+                  <img
+                    src={asset.thumbnailUrl}
+                    alt={asset.name}
+                    className="w-full h-72 lg:h-96 rounded-lg object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                    style={isModel3D ? { transform: `perspective(900px) rotateY(${tiltDeg}deg)` } : undefined}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-lg pointer-events-none" />
+                  <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <Button
+                      variant="secondary"
+                      className="bg-primary/85 text-primary-foreground border border-primary/40 shadow-glow-primary hover:bg-primary backdrop-blur-sm px-5 py-2"
+                      onClick={handlePreviewClick}
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      {isAudio ? 'Play Audio' : 'Preview Asset'}
+                    </Button>
+                    {isAudio && <audio ref={audioRef} src={asset.fileUrl} preload="metadata" />}
+                  </div>
+                  {/* Stats & share on image */}
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-accent">
+                          <Star className="h-5 w-5 fill-current" />
+                          <span className="font-medium">{asset.rating}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-white/80">
+                          <Download className="h-5 w-5" />
+                          <span>{asset.downloadCount.toLocaleString()} downloads</span>
+                        </div>
+                      </div>
+                      <Button size="icon" variant="ghost" className="text-white hover:text-primary">
+                        <Share2 className="h-5 w-5" />
+                      </Button>
                     </div>
                   </div>
-                  <Button size="icon" variant="ghost" className="text-white hover:text-primary">
-                    <Share2 className="h-5 w-5" />
-                  </Button>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Right: Description, compatibility, features, requirements, and info */}
