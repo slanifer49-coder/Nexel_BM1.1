@@ -350,8 +350,7 @@ export default function AdminAssets() {
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Asset</th>
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Category</th>
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Price</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-primary">XP Value</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-primary">Status</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-primary">Status</th>
                   <th className="px-6 py-4 text-right text-sm font-bold text-primary">Actions</th>
                 </tr>
               </thead>
