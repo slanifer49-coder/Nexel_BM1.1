@@ -108,7 +108,11 @@ export default function Showcase() {
     likeMut.mutate({ id: g._id, like: true });
   };
 
-  const handlePlay = (g: any) => setActive(g);
+  const handlePlay = (g: any) => {
+    setActive(g);
+    setGameLoading(true);
+    setGameError(false);
+  };
 
   const handleComplete = () => {
     if (!user) {
