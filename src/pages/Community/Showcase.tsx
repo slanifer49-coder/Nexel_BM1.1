@@ -234,47 +234,118 @@ export default function Showcase() {
         ))}
       </div>
 
-      <Dialog open={!!active} onOpenChange={() => { /* prevent outside close */ }}>
-        <DialogContent className="max-w-3xl bg-background">
+      <Dialog open={!!active} onOpenChange={(open) => {
+        if (!open) {
+          setActive(null);
+          setGameLoading(false);
+          setGameError(false);
+        }
+      }}>
+        <DialogContent className="max-w-4xl bg-background">
           <DialogHeader>
-            <DialogTitle className="font-orbitron">{active?.title}</DialogTitle>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="font-orbitron text-xl">{active?.title}</DialogTitle>
+              <div className="flex items-center gap-2">
+                {active?.source === 'itch.io' && (
+                  <span className="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm font-medium">
+                    itch.io Game
+                  </span>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => openInNewTab(active?.gameUrl)}
+                  className="flex items-center gap-2"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open in New Tab
+                </Button>
+              </div>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              by {active?.author} • {active?.tags?.join(', ')}
+            </p>
           </DialogHeader>
+
           <div className="space-y-4">
-            <div className="aspect-video w-full gradient-border overflow-hidden">
+            {/* Game Container */}
+            <div className="aspect-video w-full gradient-border overflow-hidden relative">
+              {gameLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                  <div className="text-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-2" />
+                    <p className="text-muted-foreground">Loading game...</p>
+                  </div>
+                </div>
+              )}
+
+              {gameError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                  <div className="text-center">
+                    <p className="text-red-500 mb-2">Failed to load game</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openInNewTab(active?.gameUrl)}
+                      className="flex items-center gap-2 mx-auto"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Open in New Tab
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {active?.gameUrl && (
                 <iframe
                   src={active.gameUrl}
                   title={active.title}
-                  className="w-full h-full"
-                  allow="autoplay; fullscreen"
+                  className="w-full h-full border-0"
+                  allow="autoplay; fullscreen; gamepad; microphone; camera"
+                  onLoad={handleGameLoad}
+                  onError={handleGameError}
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
                 />
               )}
             </div>
-            <div className="flex justify-end gap-3">
+
+            {/* Game Instructions */}
+            <div className="p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                <strong>How to Play:</strong> Use your keyboard and mouse to interact with the game.
+                If the game doesn't load properly, try opening it in a new tab for the best experience.
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-between items-center">
               <Button variant="outline" onClick={() => setActive(null)}>
-                {user ? "Cancel (No reward)" : "Close"}
+                Close Game
               </Button>
-              {user ? (
-                <Button className="bg-gradient-primary hover:glow-primary" onClick={handleComplete}>
-                  I Completed It (+5 XP)
-                </Button>
-              ) : (
-                <Button 
-                  variant="default" 
-                  onClick={() => {
-                    setActive(null);
-                    sonnerToast("Login Required", {
-                      description: "Please login to earn XP rewards",
-                      action: {
-                        label: "Login",
-                        onClick: () => window.location.href = "/auth"
-                      }
-                    });
-                  }}
-                >
-                  Login to Earn XP
-                </Button>
-              )}
+
+              <div className="flex gap-3">
+                {user ? (
+                  <Button className="bg-gradient-primary hover:glow-primary" onClick={handleComplete}>
+                    I Completed It (+5 XP)
+                  </Button>
+                ) : (
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      setActive(null);
+                      sonnerToast("Login Required", {
+                        description: "Please login to earn XP rewards",
+                        action: {
+                          label: "Login",
+                          onClick: () => window.location.href = "/auth"
+                        }
+                      });
+                    }}
+                  >
+                    Login to Earn XP
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </DialogContent>
