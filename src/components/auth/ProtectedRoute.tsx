@@ -31,7 +31,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         navigate('/pricing');
       }
     }
-  }, [user, loading, requiredPlan, router]);
+  }, [user, loading, requiredPlan, navigate, location]);
 
   // Show loading state while checking auth
   if (loading || !user) {
