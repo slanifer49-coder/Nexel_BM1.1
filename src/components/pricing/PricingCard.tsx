@@ -84,7 +84,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({ plan, isPopular = fals
 
   const handleUpgrade = async () => {
     if (!user) {
-      router.push(`/login?redirect=${encodeURIComponent('/pricing')}`);
+      navigate(`/login?redirect=${encodeURIComponent('/pricing')}`);
       return;
     }
     
