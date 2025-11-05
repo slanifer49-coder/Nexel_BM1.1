@@ -28,7 +28,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       // Check subscription level if required
       if (requiredPlan !== 'Free' && user.subscription.plan === 'Free') {
         toast.error(`This content requires a ${requiredPlan} subscription`);
-        router.push('/pricing');
+        navigate('/pricing');
       }
     }
   }, [user, loading, requiredPlan, router]);
