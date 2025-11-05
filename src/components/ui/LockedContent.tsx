@@ -2,7 +2,7 @@ import { Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { Button } from './button';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 interface LockedContentProps {
   requiredPlan: 'Starter' | 'Pro' | 'Power' | 'Ultra';
