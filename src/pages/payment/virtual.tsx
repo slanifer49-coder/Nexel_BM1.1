@@ -73,7 +73,7 @@ export default function VirtualPayment() {
       
       // Redirect to dashboard after a short delay
       setTimeout(() => {
-        router.push('/dashboard');
+        navigate('/dashboard');
       }, 2000);
     } catch (error: any) {
       console.error('Payment error:', error);
