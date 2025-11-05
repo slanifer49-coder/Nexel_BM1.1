@@ -393,10 +393,7 @@ export default function AdminAssets() {
                         </Badge>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-muted-foreground">
-                      {asset.xpValue || 0} XP
-                    </td>
-                    <td className="px-6 py-4">
+                      <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <Switch
                           checked={asset.isFeatured}
