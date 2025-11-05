@@ -101,8 +101,14 @@ export function AssetDetailModal({ asset, isOpen, onClose }: AssetDetailModalPro
     const handlePreviewClick = () => {
       if (isAudio) {
         void handleAudioToggle();
+      } else {
+        // Switch to enhanced asset viewer for other file types
+        setShowAssetViewer(true);
       }
-      // For 3D/textures/videos, integrate specific previewers later.
+    };
+
+    const handleCloseAssetViewer = () => {
+      setShowAssetViewer(false);
     };
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
