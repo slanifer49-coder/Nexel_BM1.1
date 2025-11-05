@@ -19,7 +19,7 @@ export const LockedContent: React.FC<LockedContentProps> = ({
 }) => {
   const { user } = useAuth();
   const { hasAccess } = useSubscription();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   // If user doesn't have access, show the lock overlay
   if (user && !hasAccess(requiredPlan)) {
