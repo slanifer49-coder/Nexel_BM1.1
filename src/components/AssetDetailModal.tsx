@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, Download, Share2, Package, Play } from "lucide-react";
+import { Star, Download, Share2, Package, Play, Eye } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+import { AssetViewer } from "./AssetViewer";
 
 interface Asset {
   _id: string;
