@@ -96,7 +96,7 @@ export default function AdminTutorials() {
   const updateTutorialMutation = useMutation({
     mutationFn: async (tutorial: any) => {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5001/api/v1/tutorials/${tutorial.id}`, {
+      const res = await fetch(`http://localhost:5000/api/v1/tutorials/${tutorial.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
