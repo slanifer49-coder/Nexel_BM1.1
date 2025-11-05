@@ -67,7 +67,7 @@ export default function AdminTutorials() {
   const deleteTutorialMutation = useMutation({
     mutationFn: async (tutorialId: string) => {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5001/api/v1/tutorials/${tutorialId}`, {
+      const res = await fetch(`http://localhost:5000/api/v1/tutorials/${tutorialId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
