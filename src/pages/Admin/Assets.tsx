@@ -485,24 +485,13 @@ export default function AdminAssets() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>XP Value</Label>
-                  <Input 
-                    type="number" 
-                    value={selectedAsset.xpValue || 0} 
-                    onChange={(e) => setSelectedAsset({ ...selectedAsset, xpValue: Number(e.target.value) })}
-                    min={0}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Image URL</Label>
-                  <Input 
-                    value={selectedAsset.imageUrl || ''} 
-                    onChange={(e) => setSelectedAsset({ ...selectedAsset, imageUrl: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label>Image URL</Label>
+                <Input
+                  value={selectedAsset.imageUrl || ''}
+                  onChange={(e) => setSelectedAsset({ ...selectedAsset, imageUrl: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
+                />
               </div>
               <div className="flex items-center justify-between pt-4 space-x-4">
                 <div className="flex items-center space-x-2">
