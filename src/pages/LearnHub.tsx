@@ -109,7 +109,7 @@ const LearnHub = () => {
           // basic validation
           if (backend && typeof backend === 'object') return backend as ProgressData;
         } catch (e: any) {
-          console.warn('Progress fetch failed', e?.message || e);
+          // Progress fetch failed - using fallback data
         }
       }
       // Fallback to guest mock
