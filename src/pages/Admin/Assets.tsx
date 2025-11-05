@@ -49,7 +49,7 @@ export default function AdminAssets() {
     queryFn: async () => {
       const token = localStorage.getItem('token');
       try {
-        const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
         const res = await fetch(`${base}/assets`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -76,7 +76,7 @@ export default function AdminAssets() {
   const deleteAssetMutation = useMutation({
     mutationFn: async (assetId: string) => {
       const token = localStorage.getItem('token');
-      const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const res = await fetch(`${base}/assets/${assetId}`, {
         method: 'DELETE',
         headers: {
