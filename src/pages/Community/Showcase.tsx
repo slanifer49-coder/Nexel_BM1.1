@@ -17,47 +17,79 @@ export default function Showcase() {
   const isLoading = false;
   const error = false;
   
-  // Hardcoded games data
+  // Hardcoded games data with itch.io support
   const games: any[] = [
     {
       _id: '1',
       title: 'Cyber Heist',
       description: 'Break into a high-security corporate server and steal valuable data without getting caught.',
-      thumbnail: '/game-cyber-heist.jpg',
-      gameUrl: '/games/cyber-heist',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTUwMTM4NC84ODAzODA1LnBuZw==/original/u3I%2FWj.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5023813/index.html',
       author: 'CyberDev',
       likes: 1245,
-      tags: ['action', 'stealth']
+      tags: ['action', 'stealth'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '2',
       title: 'Neon Runner',
-      description: 'Dash through glowing cityscapes and collect energy orbs.',
-      thumbnail: '/game-synthwave-racing.jpg',
-      gameUrl: '/games/neon-runner',
+      description: 'Dash through glowing cityscapes and collect energy orbs in this cyberpunk endless runner.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTM2NzQzMi83ODU3NDU5LnBuZw==/original/8lPq9u.png',
+      gameUrl: 'https://html-classic.itch.zone/html/4765187/index.html',
       author: 'NeonMaster',
       likes: 890,
-      tags: ['racing', 'arcade']
+      tags: ['racing', 'arcade'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '3',
       title: 'Synthwave Drift',
-      description: 'Race through neon highways in a synthwave atmosphere.',
-      thumbnail: '/game-synthwave-racing.jpg',
-      gameUrl: '/games/synthwave-drift',
+      description: 'Race through neon highways in a synthwave atmosphere with retro-futuristic style.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTI1NjY3Mi83NDU5MzY1LnBuZw==/original/W%2B1QdA.png',
+      gameUrl: 'https://html-classic.itch.zone/html/4502341/index.html',
       author: 'RetroWave',
       likes: 1120,
-      tags: ['racing', 'music']
+      tags: ['racing', 'music'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '4',
       title: 'Hologram Defense',
-      description: 'Protect your mainframe with holographic shields.',
-      thumbnail: '/game-cyber-heist.jpg',
-      gameUrl: '/games/hologram-defense',
+      description: 'Protect your mainframe with holographic shields in this strategic cyberpunk defense game.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTQyNjU0MS84MTY4OTI0LnBuZw==/original/pYkE5F.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5128769/index.html',
       author: 'HoloTech',
       likes: 750,
-      tags: ['strategy', 'defense']
+      tags: ['strategy', 'defense'],
+      isIframe: true,
+      source: 'itch.io'
+    },
+    {
+      _id: '5',
+      title: 'Cyber Glitch',
+      description: 'Navigate through digital glitches and corrupted data in this mind-bending puzzle game.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTU4NDI2Mi85MDc0MTQ0LnBuZw==/original/q6jB%2FL.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5234871/index.html',
+      author: 'GlitchMaster',
+      likes: 923,
+      tags: ['puzzle', 'cyberpunk'],
+      isIframe: true,
+      source: 'itch.io'
+    },
+    {
+      _id: '6',
+      title: 'Neon Racer',
+      description: 'High-speed racing through neon-lit city streets with synthwave soundtrack.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTQ3NjU4OS84NDIzNjM3LnBuZw==/original/XzGhWw.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5347612/index.html',
+      author: 'SpeedRunner',
+      likes: 1456,
+      tags: ['racing', 'neon'],
+      isIframe: true,
+      source: 'itch.io'
     }
   ];
 
