@@ -13,7 +13,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requiredPlan = 'Free' 
 }) => {
   const { user, loading } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!loading) {
