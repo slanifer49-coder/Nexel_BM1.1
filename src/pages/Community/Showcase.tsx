@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiService from "@/services/api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Heart, Play } from "lucide-react";
+import { Heart, Play, ExternalLink, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast as sonnerToast } from "@/components/ui/sonner";
 import { parseShowcaseGame } from "@/utils/parseJsonFields";
