@@ -42,7 +42,7 @@ export const LockedContent: React.FC<LockedContentProps> = ({
           </p>
           
           <Button 
-            onClick={() => router.push('/pricing')}
+            onClick={() => navigate('/pricing')}
             className="bg-gradient-primary hover:glow-primary"
           >
             Upgrade Now
