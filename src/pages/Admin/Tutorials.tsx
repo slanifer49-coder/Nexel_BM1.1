@@ -52,7 +52,7 @@ export default function AdminTutorials() {
     queryKey: ['admin-tutorials'],
     queryFn: async () => {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5001/api/v1/tutorials', {
+      const res = await fetch('http://localhost:5000/api/v1/tutorials', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -128,7 +128,7 @@ export default function AdminTutorials() {
   const addTutorialMutation = useMutation({
     mutationFn: async (tutorial: any) => {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5001/api/v1/tutorials', {
+      const res = await fetch('http://localhost:5000/api/v1/tutorials', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
