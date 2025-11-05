@@ -21,7 +21,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       // If user is not logged in, redirect to login
       if (!user) {
         toast.error('Please log in to access this page');
-        router.push(`/login?redirect=${encodeURIComponent(router.asPath)}`);
+        navigate(`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`);
         return;
       }
 
