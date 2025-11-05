@@ -128,6 +128,22 @@ export default function Showcase() {
     // Reward 5 XP (placeholder feedback)
     sonnerToast("+5 XP", { description: "Thanks for playing!", duration: 2000 });
     setActive(null);
+    setGameLoading(false);
+    setGameError(false);
+  };
+
+  const handleGameLoad = () => {
+    setGameLoading(false);
+    setGameError(false);
+  };
+
+  const handleGameError = () => {
+    setGameLoading(false);
+    setGameError(true);
+  };
+
+  const openInNewTab = (gameUrl: string) => {
+    window.open(gameUrl, '_blank', 'noopener,noreferrer');
   };
 
   if (isLoading) {
