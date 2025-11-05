@@ -54,6 +54,7 @@ export function AssetDetailModal({ asset, isOpen, onClose }: AssetDetailModalPro
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [tiltDeg, setTiltDeg] = useState(0);
+    const [showAssetViewer, setShowAssetViewer] = useState(false);
 
     const fileTypeLower = (asset.fileType || "").toLowerCase();
     const categoryLower = (asset.category || "").toLowerCase();
