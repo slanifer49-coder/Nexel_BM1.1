@@ -9,8 +9,9 @@ import { Loader2, CheckCircle, CreditCard, Calendar, Lock, User } from 'lucide-r
 import { toast } from 'sonner';
 
 export default function VirtualPayment() {
-  const router = useRouter();
-  const { plan } = router.query;
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get('plan');
   const { updateSubscription } = useSubscription();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
