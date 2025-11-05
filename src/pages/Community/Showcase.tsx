@@ -12,6 +12,8 @@ export default function Showcase() {
   const qc = useQueryClient();
   const { user, token } = useAuth();
   const [active, setActive] = useState<any | null>(null);
+  const [gameLoading, setGameLoading] = useState(false);
+  const [gameError, setGameError] = useState(false);
 
   // Use hardcoded data instead of API call
   const isLoading = false;
