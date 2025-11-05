@@ -2,7 +2,7 @@ import { Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { Button } from './button';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 
 interface LockedContentProps {
   requiredPlan: 'Starter' | 'Pro' | 'Power' | 'Ultra';
@@ -19,7 +19,7 @@ export const LockedContent: React.FC<LockedContentProps> = ({
 }) => {
   const { user } = useAuth();
   const { hasAccess } = useSubscription();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   // If user doesn't have access, show the lock overlay
   if (user && !hasAccess(requiredPlan)) {
@@ -42,7 +42,7 @@ export const LockedContent: React.FC<LockedContentProps> = ({
           </p>
           
           <Button 
-            onClick={() => router.push('/pricing')}
+            onClick={() => navigate('/pricing')}
             className="bg-gradient-primary hover:glow-primary"
           >
             Upgrade Now

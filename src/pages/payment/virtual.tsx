@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,8 +9,9 @@ import { Loader2, CheckCircle, CreditCard, Calendar, Lock, User } from 'lucide-r
 import { toast } from 'sonner';
 
 export default function VirtualPayment() {
-  const router = useRouter();
-  const { plan } = router.query;
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get('plan');
   const { updateSubscription } = useSubscription();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -27,9 +28,9 @@ export default function VirtualPayment() {
 
   useEffect(() => {
     if (!plan) {
-      router.push('/pricing');
+      navigate('/pricing');
     }
-  }, [plan, router]);
+  }, [plan, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -72,10 +73,9 @@ export default function VirtualPayment() {
       
       // Redirect to dashboard after a short delay
       setTimeout(() => {
-        router.push('/dashboard');
+        navigate('/dashboard');
       }, 2000);
     } catch (error: any) {
-      console.error('Payment error:', error);
       toast.error(error.message || 'Payment failed. Please try again.');
     } finally {
       setLoading(false);

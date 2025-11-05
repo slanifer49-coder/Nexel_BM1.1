@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 
@@ -13,24 +13,25 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   requiredPlan = 'Free' 
 }) => {
   const { user, loading } = useAuth();
-  const router = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!loading) {
       // If user is not logged in, redirect to login
       if (!user) {
         toast.error('Please log in to access this page');
-        router.push(`/login?redirect=${encodeURIComponent(router.asPath)}`);
+        navigate(`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`);
         return;
       }
 
       // Check subscription level if required
       if (requiredPlan !== 'Free' && user.subscription.plan === 'Free') {
         toast.error(`This content requires a ${requiredPlan} subscription`);
-        router.push('/pricing');
+        navigate('/pricing');
       }
     }
-  }, [user, loading, requiredPlan, router]);
+  }, [user, loading, requiredPlan, navigate, location]);
 
   // Show loading state while checking auth
   if (loading || !user) {
@@ -59,7 +60,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
             This content requires a {requiredPlan} plan or higher. Your current plan is {user.subscription.plan}.
           </p>
           <button
-            onClick={() => router.push('/pricing')}
+            onClick={() => navigate('/pricing')}
             className="px-6 py-3 bg-gradient-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
           >
             Upgrade to {requiredPlan}

@@ -59,7 +59,7 @@ export default function AdminCommunity() {
       console.log('Fetching admin leaderboard with token:', token ? 'Present' : 'Missing');
       
       try {
-        const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
         const response = await fetch(`${base}/admin/leaderboard`, {
           headers: {
             'Authorization': `Bearer ${token}`

@@ -25,7 +25,7 @@ export default function Profile() {
       const formData = new FormData();
       formData.append('image', file);
 
-      const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const response = await fetch(`${base}/users/profile-image`, {
         method: 'POST',
         headers: {

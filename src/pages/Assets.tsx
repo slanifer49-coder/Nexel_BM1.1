@@ -58,7 +58,6 @@ const Assets = () => {
         try {
           setLibrary(JSON.parse(saved));
         } catch (e) {
-          console.error('Failed to load library:', e);
         }
       }
     } else {

@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiService from "@/services/api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Heart, Play } from "lucide-react";
+import { Heart, Play, ExternalLink, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast as sonnerToast } from "@/components/ui/sonner";
 import { parseShowcaseGame } from "@/utils/parseJsonFields";
@@ -12,52 +12,86 @@ export default function Showcase() {
   const qc = useQueryClient();
   const { user, token } = useAuth();
   const [active, setActive] = useState<any | null>(null);
+  const [gameLoading, setGameLoading] = useState(false);
+  const [gameError, setGameError] = useState(false);
 
   // Use hardcoded data instead of API call
   const isLoading = false;
   const error = false;
   
-  // Hardcoded games data
+  // Hardcoded games data with itch.io support
   const games: any[] = [
     {
       _id: '1',
       title: 'Cyber Heist',
       description: 'Break into a high-security corporate server and steal valuable data without getting caught.',
-      thumbnail: '/game-cyber-heist.jpg',
-      gameUrl: '/games/cyber-heist',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTUwMTM4NC84ODAzODA1LnBuZw==/original/u3I%2FWj.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5023813/index.html',
       author: 'CyberDev',
       likes: 1245,
-      tags: ['action', 'stealth']
+      tags: ['action', 'stealth'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '2',
       title: 'Neon Runner',
-      description: 'Dash through glowing cityscapes and collect energy orbs.',
-      thumbnail: '/game-synthwave-racing.jpg',
-      gameUrl: '/games/neon-runner',
+      description: 'Dash through glowing cityscapes and collect energy orbs in this cyberpunk endless runner.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTM2NzQzMi83ODU3NDU5LnBuZw==/original/8lPq9u.png',
+      gameUrl: 'https://html-classic.itch.zone/html/4765187/index.html',
       author: 'NeonMaster',
       likes: 890,
-      tags: ['racing', 'arcade']
+      tags: ['racing', 'arcade'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '3',
       title: 'Synthwave Drift',
-      description: 'Race through neon highways in a synthwave atmosphere.',
-      thumbnail: '/game-synthwave-racing.jpg',
-      gameUrl: '/games/synthwave-drift',
+      description: 'Race through neon highways in a synthwave atmosphere with retro-futuristic style.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTI1NjY3Mi83NDU5MzY1LnBuZw==/original/W%2B1QdA.png',
+      gameUrl: 'https://html-classic.itch.zone/html/4502341/index.html',
       author: 'RetroWave',
       likes: 1120,
-      tags: ['racing', 'music']
+      tags: ['racing', 'music'],
+      isIframe: true,
+      source: 'itch.io'
     },
     {
       _id: '4',
       title: 'Hologram Defense',
-      description: 'Protect your mainframe with holographic shields.',
-      thumbnail: '/game-cyber-heist.jpg',
-      gameUrl: '/games/hologram-defense',
+      description: 'Protect your mainframe with holographic shields in this strategic cyberpunk defense game.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTQyNjU0MS84MTY4OTI0LnBuZw==/original/pYkE5F.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5128769/index.html',
       author: 'HoloTech',
       likes: 750,
-      tags: ['strategy', 'defense']
+      tags: ['strategy', 'defense'],
+      isIframe: true,
+      source: 'itch.io'
+    },
+    {
+      _id: '5',
+      title: 'Cyber Glitch',
+      description: 'Navigate through digital glitches and corrupted data in this mind-bending puzzle game.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTU4NDI2Mi85MDc0MTQ0LnBuZw==/original/q6jB%2FL.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5234871/index.html',
+      author: 'GlitchMaster',
+      likes: 923,
+      tags: ['puzzle', 'cyberpunk'],
+      isIframe: true,
+      source: 'itch.io'
+    },
+    {
+      _id: '6',
+      title: 'Neon Racer',
+      description: 'High-speed racing through neon-lit city streets with synthwave soundtrack.',
+      thumbnail: 'https://img.itch.zone/aW1hZ2UvMTQ3NjU4OS84NDIzNjM3LnBuZw==/original/XzGhWw.png',
+      gameUrl: 'https://html-classic.itch.zone/html/5347612/index.html',
+      author: 'SpeedRunner',
+      likes: 1456,
+      tags: ['racing', 'neon'],
+      isIframe: true,
+      source: 'itch.io'
     }
   ];
 
@@ -74,7 +108,11 @@ export default function Showcase() {
     likeMut.mutate({ id: g._id, like: true });
   };
 
-  const handlePlay = (g: any) => setActive(g);
+  const handlePlay = (g: any) => {
+    setActive(g);
+    setGameLoading(true);
+    setGameError(false);
+  };
 
   const handleComplete = () => {
     if (!user) {
@@ -90,6 +128,22 @@ export default function Showcase() {
     // Reward 5 XP (placeholder feedback)
     sonnerToast("+5 XP", { description: "Thanks for playing!", duration: 2000 });
     setActive(null);
+    setGameLoading(false);
+    setGameError(false);
+  };
+
+  const handleGameLoad = () => {
+    setGameLoading(false);
+    setGameError(false);
+  };
+
+  const handleGameError = () => {
+    setGameLoading(false);
+    setGameError(true);
+  };
+
+  const openInNewTab = (gameUrl: string) => {
+    window.open(gameUrl, '_blank', 'noopener,noreferrer');
   };
 
   if (isLoading) {
@@ -132,7 +186,14 @@ export default function Showcase() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-bold font-orbitron leading-tight">{g.title}</h3>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-bold font-orbitron leading-tight">{g.title}</h3>
+                    {g.source === 'itch.io' && (
+                      <span className="px-2 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs font-medium">
+                        itch.io
+                      </span>
+                    )}
+                  </div>
                   <p className="text-muted-foreground text-sm">by {g.author}</p>
                 </div>
                 <button
@@ -173,47 +234,118 @@ export default function Showcase() {
         ))}
       </div>
 
-      <Dialog open={!!active} onOpenChange={() => { /* prevent outside close */ }}>
-        <DialogContent className="max-w-3xl bg-background">
+      <Dialog open={!!active} onOpenChange={(open) => {
+        if (!open) {
+          setActive(null);
+          setGameLoading(false);
+          setGameError(false);
+        }
+      }}>
+        <DialogContent className="max-w-4xl bg-background">
           <DialogHeader>
-            <DialogTitle className="font-orbitron">{active?.title}</DialogTitle>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="font-orbitron text-xl">{active?.title}</DialogTitle>
+              <div className="flex items-center gap-2">
+                {active?.source === 'itch.io' && (
+                  <span className="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-sm font-medium">
+                    itch.io Game
+                  </span>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => openInNewTab(active?.gameUrl)}
+                  className="flex items-center gap-2"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open in New Tab
+                </Button>
+              </div>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              by {active?.author} • {active?.tags?.join(', ')}
+            </p>
           </DialogHeader>
+
           <div className="space-y-4">
-            <div className="aspect-video w-full gradient-border overflow-hidden">
+            {/* Game Container */}
+            <div className="aspect-video w-full gradient-border overflow-hidden relative">
+              {gameLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                  <div className="text-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-2" />
+                    <p className="text-muted-foreground">Loading game...</p>
+                  </div>
+                </div>
+              )}
+
+              {gameError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                  <div className="text-center">
+                    <p className="text-red-500 mb-2">Failed to load game</p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openInNewTab(active?.gameUrl)}
+                      className="flex items-center gap-2 mx-auto"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Open in New Tab
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {active?.gameUrl && (
                 <iframe
                   src={active.gameUrl}
                   title={active.title}
-                  className="w-full h-full"
-                  allow="autoplay; fullscreen"
+                  className="w-full h-full border-0"
+                  allow="autoplay; fullscreen; gamepad; microphone; camera"
+                  onLoad={handleGameLoad}
+                  onError={handleGameError}
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
                 />
               )}
             </div>
-            <div className="flex justify-end gap-3">
+
+            {/* Game Instructions */}
+            <div className="p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm text-muted-foreground">
+                <strong>How to Play:</strong> Use your keyboard and mouse to interact with the game.
+                If the game doesn't load properly, try opening it in a new tab for the best experience.
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex justify-between items-center">
               <Button variant="outline" onClick={() => setActive(null)}>
-                {user ? "Cancel (No reward)" : "Close"}
+                Close Game
               </Button>
-              {user ? (
-                <Button className="bg-gradient-primary hover:glow-primary" onClick={handleComplete}>
-                  I Completed It (+5 XP)
-                </Button>
-              ) : (
-                <Button 
-                  variant="default" 
-                  onClick={() => {
-                    setActive(null);
-                    sonnerToast("Login Required", {
-                      description: "Please login to earn XP rewards",
-                      action: {
-                        label: "Login",
-                        onClick: () => window.location.href = "/auth"
-                      }
-                    });
-                  }}
-                >
-                  Login to Earn XP
-                </Button>
-              )}
+
+              <div className="flex gap-3">
+                {user ? (
+                  <Button className="bg-gradient-primary hover:glow-primary" onClick={handleComplete}>
+                    I Completed It (+5 XP)
+                  </Button>
+                ) : (
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      setActive(null);
+                      sonnerToast("Login Required", {
+                        description: "Please login to earn XP rewards",
+                        action: {
+                          label: "Login",
+                          onClick: () => window.location.href = "/auth"
+                        }
+                      });
+                    }}
+                  >
+                    Login to Earn XP
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </DialogContent>

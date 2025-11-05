@@ -37,7 +37,6 @@ export default function AdminAssets() {
     description: '',
     category: 'model',
     price: 0,
-    xpValue: 10,
     isFeatured: false,
     isPremium: false,
     imageUrl: '',
@@ -50,7 +49,7 @@ export default function AdminAssets() {
     queryFn: async () => {
       const token = localStorage.getItem('token');
       try {
-        const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+        const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
         const res = await fetch(`${base}/assets`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -62,7 +61,6 @@ export default function AdminAssets() {
         const data = await res.json();
         return data;
       } catch (error) {
-        console.error('Error fetching assets:', error);
         toast({
           title: "Error",
           description: "Failed to fetch assets. Please login first.",
@@ -77,7 +75,7 @@ export default function AdminAssets() {
   const deleteAssetMutation = useMutation({
     mutationFn: async (assetId: string) => {
       const token = localStorage.getItem('token');
-      const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const res = await fetch(`${base}/assets/${assetId}`, {
         method: 'DELETE',
         headers: {
@@ -177,7 +175,6 @@ export default function AdminAssets() {
         description: '',
         category: 'model',
         price: 0,
-        xpValue: 10,
         isFeatured: false,
         isPremium: false,
         imageUrl: '',
@@ -352,8 +349,7 @@ export default function AdminAssets() {
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Asset</th>
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Category</th>
                   <th className="px-6 py-4 text-left text-sm font-bold text-primary">Price</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-primary">XP Value</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-primary">Status</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-primary">Status</th>
                   <th className="px-6 py-4 text-right text-sm font-bold text-primary">Actions</th>
                 </tr>
               </thead>
@@ -395,9 +391,6 @@ export default function AdminAssets() {
                           Free
                         </Badge>
                       )}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-muted-foreground">
-                      {asset.xpValue || 0} XP
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
@@ -491,24 +484,13 @@ export default function AdminAssets() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>XP Value</Label>
-                  <Input 
-                    type="number" 
-                    value={selectedAsset.xpValue || 0} 
-                    onChange={(e) => setSelectedAsset({ ...selectedAsset, xpValue: Number(e.target.value) })}
-                    min={0}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Image URL</Label>
-                  <Input 
-                    value={selectedAsset.imageUrl || ''} 
-                    onChange={(e) => setSelectedAsset({ ...selectedAsset, imageUrl: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label>Image URL</Label>
+                <Input
+                  value={selectedAsset.imageUrl || ''}
+                  onChange={(e) => setSelectedAsset({ ...selectedAsset, imageUrl: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
+                />
               </div>
               <div className="flex items-center justify-between pt-4 space-x-4">
                 <div className="flex items-center space-x-2">
@@ -594,24 +576,13 @@ export default function AdminAssets() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>XP Value</Label>
-                <Input 
-                  type="number" 
-                  value={newAsset.xpValue} 
-                  onChange={(e) => setNewAsset({ ...newAsset, xpValue: Number(e.target.value) })}
-                  min={0}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Image URL</Label>
-                <Input 
-                  value={newAsset.imageUrl} 
-                  onChange={(e) => setNewAsset({ ...newAsset, imageUrl: e.target.value })}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>Image URL</Label>
+              <Input
+                value={newAsset.imageUrl}
+                onChange={(e) => setNewAsset({ ...newAsset, imageUrl: e.target.value })}
+                placeholder="https://example.com/image.jpg"
+              />
             </div>
             <div className="flex items-center justify-between pt-4 space-x-4">
               <div className="flex items-center space-x-2">

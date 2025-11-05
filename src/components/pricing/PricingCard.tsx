@@ -4,7 +4,7 @@ import { Check, Zap, Crown } from 'lucide-react';
 import { SubscriptionBadge } from '../ui/SubscriptionBadge';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const features = {
@@ -72,7 +72,7 @@ interface PricingCardProps {
 export const PricingCard: React.FC<PricingCardProps> = ({ plan, isPopular = false }) => {
   const { user } = useAuth();
   const { subscription, updateSubscription, isLoading } = useSubscription();
-  const router = useRouter();
+  const navigate = useNavigate();
   
   const isCurrentPlan = subscription.plan === plan;
   const isSubscribed = subscription.plan !== 'Free';
@@ -84,7 +84,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({ plan, isPopular = fals
 
   const handleUpgrade = async () => {
     if (!user) {
-      router.push(`/login?redirect=${encodeURIComponent('/pricing')}`);
+      navigate(`/login?redirect=${encodeURIComponent('/pricing')}`);
       return;
     }
     

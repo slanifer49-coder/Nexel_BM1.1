@@ -107,7 +107,7 @@ export const CheckoutModal = ({ isOpen, onClose, plan }: CheckoutModalProps) => 
     // Save subscription to backend
     try {
       const token = localStorage.getItem('token');
-      const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const response = await fetch(`${base}/subscriptions/update-subscription`, {
         method: 'POST',
         headers: {

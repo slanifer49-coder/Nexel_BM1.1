@@ -79,7 +79,7 @@ export const SubscriptionProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const updateSubscriptionDirectly = async (plan: SubscriptionPlan) => {
     try {
-      const base = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/v1';
+      const base = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const res = await fetch(`${base}/subscriptions/update-subscription`, {
         method: 'POST',
         headers: {
