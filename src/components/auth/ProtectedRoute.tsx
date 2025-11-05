@@ -60,7 +60,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
             This content requires a {requiredPlan} plan or higher. Your current plan is {user.subscription.plan}.
           </p>
           <button
-            onClick={() => router.push('/pricing')}
+            onClick={() => navigate('/pricing')}
             className="px-6 py-3 bg-gradient-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
           >
             Upgrade to {requiredPlan}
