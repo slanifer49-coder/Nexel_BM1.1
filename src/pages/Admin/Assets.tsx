@@ -37,7 +37,6 @@ export default function AdminAssets() {
     description: '',
     category: 'model',
     price: 0,
-    xpValue: 10,
     isFeatured: false,
     isPremium: false,
     imageUrl: '',
