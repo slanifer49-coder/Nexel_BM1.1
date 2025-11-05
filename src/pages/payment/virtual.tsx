@@ -28,9 +28,9 @@ export default function VirtualPayment() {
 
   useEffect(() => {
     if (!plan) {
-      router.push('/pricing');
+      navigate('/pricing');
     }
-  }, [plan, router]);
+  }, [plan, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
