@@ -73,26 +73,20 @@ const Auth = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted');
     
     try {
       if (!validateForm()) {
-        console.log('Form validation failed');
         return;
       }
       
-      console.log('Attempting to submit form:', { isLogin, formData });
       setLoading(true);
       
       if (isLogin) {
-        console.log('Logging in...');
         await login(formData.email, formData.password);
       } else {
-        console.log('Registering new user...');
         await register(formData.name, formData.email, formData.password);
       }
     } catch (error: any) {
-      console.error("Auth error:", error);
       toast({
         title: "Authentication failed",
         description: error.message || "An error occurred during authentication. Please try again.",

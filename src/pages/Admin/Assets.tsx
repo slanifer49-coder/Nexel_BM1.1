@@ -61,7 +61,6 @@ export default function AdminAssets() {
         const data = await res.json();
         return data;
       } catch (error) {
-        console.error('Error fetching assets:', error);
         toast({
           title: "Error",
           description: "Failed to fetch assets. Please login first.",

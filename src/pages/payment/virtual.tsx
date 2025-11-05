@@ -76,7 +76,6 @@ export default function VirtualPayment() {
         navigate('/dashboard');
       }, 2000);
     } catch (error: any) {
-      console.error('Payment error:', error);
       toast.error(error.message || 'Payment failed. Please try again.');
     } finally {
       setLoading(false);

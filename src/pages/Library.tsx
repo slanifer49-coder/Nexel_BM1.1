@@ -21,7 +21,6 @@ export default function Library() {
         const data = await ApiService.getLibraryItems(token);
         return data.items || [];
       } catch (error) {
-        console.error('Error fetching library:', error);
         toast({
           title: "Error",
           description: "Failed to fetch your library items",
