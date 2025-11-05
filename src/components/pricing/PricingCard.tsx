@@ -4,7 +4,7 @@ import { Check, Zap, Crown } from 'lucide-react';
 import { SubscriptionBadge } from '../ui/SubscriptionBadge';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/router';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const features = {
